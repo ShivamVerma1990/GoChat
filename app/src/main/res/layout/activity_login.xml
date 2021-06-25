@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -10,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sing_up"
+        android:text="@string/login"
 
         android:textStyle="bold"
         android:layout_marginStart="15dp"
@@ -25,40 +24,26 @@
 
 
     <EditText
-        android:textColorHint="@color/black"
-        android:id="@+id/etName"
+        android:id="@+id/etEmails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:inputType="text"
-        android:fontFamily="@font/gilroy_light"
-        android:background="@color/colorTextBackground"
-        android:hint="Enter your name"
-        android:padding="12dp"
-        android:textColor="@color/colorText" />
-
-    <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/colorDarkGray"
 
         android:fontFamily="@font/gilroy_light"
         android:layout_marginTop="10dp"
         android:inputType="textEmailAddress"
         android:layout_marginEnd="15dp"
         android:background="@color/colorTextBackground"
-        android:hint="Enter your email"
+        android:hint="@string/enter_your_email"
         android:padding="12dp"
-        android:textColor="@color/colorText" />
+        android:textColor="@color/colorText"
+        android:autofillHints="" />
 
     <EditText
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/colorDarkGray"
 
-        android:id="@+id/etPassword"
+        android:id="@+id/etPasswords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/gilroy_light"
@@ -67,33 +52,25 @@
         android:inputType="textPassword"
         android:layout_marginEnd="15dp"
         android:background="@color/colorTextBackground"
-        android:maxLength="6"
-        android:hint="Enter Password"
+        android:hint="@string/enter_password"
         android:padding="12dp"
-        android:textColor="@color/colorText" />
+        android:textColor="@color/colorText"
+        android:autofillHints="" />
 
-    <EditText
-        android:id="@+id/etConfirmPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gilroy_light"
-        android:textColorHint="@color/black"
-android:maxLength="6"
-        android:layout_marginStart="15dp"
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
-        android:background="@color/colorTextBackground"
-        android:hint="Enter Confirm Password"
-        android:padding="12dp"
-        android:textColor="@color/colorText" />
     <Button
-        android:id="@+id/btnSignUp"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorSky"
         android:layout_margin="15dp"
         android:textColor="@color/colorAccent"
-        android:text="SING UP"/>
+        android:text="@string/login"/>
+<TextView
+    android:id="@+id/register"
+    android:textColor="#00B8D4"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+android:text="@string/if_you_have_not_account_then_you_click_here"/>
+
 
 </LinearLayout>

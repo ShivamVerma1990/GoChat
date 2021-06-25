@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">GoChat</string>
+    <string name="sing_up">SING UP</string>
+    <string name="login">Login</string>
+    <string name="if_you_have_not_account_then_you_click_here">if you have not account? then you click here</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="users">Users</string>
+    <string name="profile">Profile</string>
 </resources>

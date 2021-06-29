@@ -21,7 +21,6 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         chatRecyclerView=findViewById(R.id.chatRecyclerView)
-
         mAuth = FirebaseAuth.getInstance()
         val chatUser=mAuth.currentUser
         val chatUserId=chatUser!!.uid
@@ -95,34 +94,37 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
-fun readMessage(senderId: String,receiveId: String){
-val ref=FirebaseDatabase.getInstance().getReference("Chat")
-ref.addValueEventListener(object:ValueEventListener{
-    override fun onDataChange(snapshot: DataSnapshot) {
-        for(dataSnapshot:DataSnapshot in snapshot.children){
+    fun readMessage(senderId: String, receiverId: String) {
+        val databaseReference: DatabaseReference =
+            FirebaseDatabase.getInstance().getReference("Chat")
 
-            val chat=dataSnapshot.getValue(Chat::class.java)
-            if(chat!!.senderId.equals(senderId)&&chat.receiveId.equals(receiveId)||chat!!.senderId.equals(receiveId)&&chat.receiveId.equals(senderId))
-            {
-chatList.add(chat)
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
-        }
 
-    val chatAdapter=ChatAdapter(this@ChatActivity,chatList)
-        val layoutManager=LinearLayoutManager(this@ChatActivity)
-        chatRecyclerView.layoutManager=layoutManager
-        chatRecyclerView.adapter=chatAdapter
+            override fun onDataChange(snapshot: DataSnapshot) {
+                chatList.clear()
+                for (dataSnapShot: DataSnapshot in snapshot.children) {
+                    val chat = dataSnapShot.getValue(Chat::class.java)
+
+                    if (chat!!.senderId.equals(senderId) && chat!!.receiveId.equals(receiverId) ||
+                        chat!!.senderId.equals(receiverId) && chat!!.receiveId.equals(senderId)
+                    ) {
+                        chatList.add(chat)
+                    }
+                }
+
+                val chatAdapter = ChatAdapter(this@ChatActivity, chatList)
+                var layoutManager=LinearLayoutManager(this@ChatActivity)
+
+                chatRecyclerView.layoutManager=layoutManager
+
+                chatRecyclerView.adapter = chatAdapter
 
 
-
-
+            }
+        })
     }
 
-    override fun onCancelled(error: DatabaseError) {
-        TODO("Not yet implemented")
-    }
-
-})
-
-}
 }

@@ -1,14 +1,27 @@
-package com.candroid.gochat
+package com.candroid.gochat.chat
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.candroid.gochat.adapter.ChatAdapter
+import com.candroid.gochat.R
+import com.candroid.gochat.pushnotification.NotificationData
+import com.candroid.gochat.pushnotification.PushNotification
+import com.candroid.gochat.pushnotification.Retrofit
+import com.candroid.gochat.userinfo.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
+import java.lang.Exception
 
 class ChatActivity : AppCompatActivity() {
     lateinit var firebaseDatabase: FirebaseDatabase
@@ -17,6 +30,7 @@ class ChatActivity : AppCompatActivity() {
     lateinit var chatRecyclerView:RecyclerView
 
     var chatList= arrayListOf<Chat>()
+    var topic=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -27,6 +41,7 @@ class ChatActivity : AppCompatActivity() {
         firebaseDatabase = FirebaseDatabase.getInstance()
         val intent = getIntent()
         val userId = intent.getStringExtra("userId")
+        val userName = intent.getStringExtra("userName")
         databaseReference = firebaseDatabase.getReference("users").child(userId!!)
         imgProfile.setOnClickListener {
             onBackPressed()
@@ -41,6 +56,11 @@ class ChatActivity : AppCompatActivity() {
             else{
 
                 sendMessage(chatUserId,userId,message)
+            etMessage.setText("")
+                topic="/topics/$userId"
+PushNotification(NotificationData(userName!!,message),topic).also {
+    sendsMessage(it)
+}
 
             }
 
@@ -126,5 +146,16 @@ class ChatActivity : AppCompatActivity() {
             }
         })
     }
-
+fun sendsMessage(notification: PushNotification)= CoroutineScope(Dispatchers.IO).launch {
+    try {
+        val response = Retrofit.api.postNotification(notification)
+        if(response.isSuccessful) {
+            Log.d("TAG", "Response: ${Gson().toJson(response)}")
+        } else {
+            Log.e("TAG", response.errorBody()!!.string())
+        }
+    } catch(e: Exception) {
+        Log.e("TAG", e.toString())
+    }
+}
 }

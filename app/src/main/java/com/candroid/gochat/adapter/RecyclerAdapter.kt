@@ -1,16 +1,17 @@
-package com.candroid.gochat
+package com.candroid.gochat.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.candroid.gochat.R
+import com.candroid.gochat.userinfo.User
+import com.candroid.gochat.chat.ChatActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
 class RecyclerAdapter(val context: Context,val itemList:ArrayList<User>):RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder>() {
@@ -32,8 +33,9 @@ val temp:TextView=view.findViewById(R.id.temp)
 holder.userName.text=cool.userName
 Glide.with(context).load(cool.profileImage).placeholder(R.drawable.profile_image).into(holder.userImage)
 holder.layoutUser.setOnClickListener{
-    val intent= Intent(context,ChatActivity::class.java)
+    val intent= Intent(context, ChatActivity::class.java)
     intent.putExtra("userId",cool.userId)
+    intent.putExtra("userName",cool.userName)
     context.startActivity(intent)
 
 

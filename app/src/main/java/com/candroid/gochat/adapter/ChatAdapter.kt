@@ -1,12 +1,13 @@
-package com.candroid.gochat
+package com.candroid.gochat.adapter
 import android.view.View
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.candroid.gochat.R
+import com.candroid.gochat.chat.Chat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView

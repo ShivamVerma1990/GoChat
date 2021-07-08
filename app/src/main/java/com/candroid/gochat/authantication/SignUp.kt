@@ -1,9 +1,11 @@
-package com.candroid.gochat
+package com.candroid.gochat.authantication
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.candroid.gochat.R
+import com.candroid.gochat.userinfo.UserActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -53,7 +55,7 @@ fun addUsers(email:String,password:String,name: String){
 storeUser(email,name)
       Toast.makeText(this,"successfully",Toast.LENGTH_SHORT).show()
       Toast.makeText(this, "you successfully login", Toast.LENGTH_SHORT).show()
-      val intent=Intent(this,UserActivity::class.java)
+      val intent=Intent(this, UserActivity::class.java)
       startActivity(intent)
       finish()
 

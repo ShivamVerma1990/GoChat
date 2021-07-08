@@ -3,25 +3,36 @@
     package="com.candroid.gochat">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/go_chat"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/go_chat"
         android:supportsRtl="true"
         android:theme="@style/Theme.GoChat">
-        <activity android:name=".ChatActivity"></activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".UserActivity" />
-        <activity android:name=".LoginActivity">
+        <service android:name=".pushnotification.MessagingService"
+            android:permission="com.google.android.c2dm.permission.SEND">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+
+        </service>
+
+        <activity android:name=".chat.ChatActivity"></activity>
+        <activity android:name=".userinfo.ProfileActivity" />
+        <activity android:name=".userinfo.UserActivity" />
+        <activity android:name=".authantication.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUp" />
+        <activity android:name=".authantication.SignUp" />
     </application>
 
 </manifest>

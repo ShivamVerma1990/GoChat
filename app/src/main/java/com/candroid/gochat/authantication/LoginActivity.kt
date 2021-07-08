@@ -1,9 +1,11 @@
-package com.candroid.gochat
+package com.candroid.gochat.authantication
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.candroid.gochat.R
+import com.candroid.gochat.userinfo.UserActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -14,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
     mAuth= FirebaseAuth.getInstance()
 if(mAuth.currentUser!=null){
-    val intent=Intent(this,UserActivity::class.java)
+    val intent=Intent(this, UserActivity::class.java)
     startActivity(intent)
     finish()
 
@@ -27,7 +29,7 @@ if(mAuth.currentUser!=null){
 
 
         register.setOnClickListener {
-            val intent=Intent(this,SignUp::class.java)
+            val intent=Intent(this, SignUp::class.java)
             startActivity(intent)
             finish()
         }
@@ -56,7 +58,7 @@ fun loginUser(email:String ,password:String){
     mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this) {
         if(it.isSuccessful){
             Toast.makeText(this, "you successfully login", Toast.LENGTH_SHORT).show()
-            val intent=Intent(this,UserActivity::class.java)
+            val intent=Intent(this, UserActivity::class.java)
             startActivity(intent)
         finish()
         }

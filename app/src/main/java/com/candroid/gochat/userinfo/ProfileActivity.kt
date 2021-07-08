@@ -1,9 +1,8 @@
-package com.candroid.gochat
+package com.candroid.gochat.userinfo
 
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,13 +10,13 @@ import android.view.View
 import android.provider.MediaStore
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.candroid.gochat.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.io.IOException
-import java.net.URI
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -34,7 +33,7 @@ lateinit var firebaseReference: DatabaseReference
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         imgBack.setOnClickListener {
-            val intent= Intent(this,UserActivity::class.java)
+            val intent= Intent(this, UserActivity::class.java)
             startActivity(intent)
             finish()
         }//here we choose our images

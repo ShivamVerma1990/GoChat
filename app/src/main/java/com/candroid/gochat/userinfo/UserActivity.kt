@@ -1,4 +1,4 @@
-package com.candroid.gochat
+package com.candroid.gochat.userinfo
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +7,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.candroid.gochat.R
+import com.candroid.gochat.adapter.RecyclerAdapter
+import com.candroid.gochat.pushnotification.MessagingService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity : AppCompatActivity() {
@@ -17,18 +23,25 @@ class UserActivity : AppCompatActivity() {
 lateinit var firebaseDatabase: FirebaseDatabase
 lateinit var firebaseReference: DatabaseReference
 lateinit var mAuth:FirebaseAuth
-
+lateinit var firebaseMessaging:FirebaseMessaging
    val userList= arrayListOf<User>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
 
+        MessagingService.shardPref=getSharedPreferences("pref", MODE_PRIVATE)
+        firebaseMessaging= FirebaseMessaging.getInstance()
+        firebaseMessaging.token.addOnSuccessListener {
+            MessagingService.token = it
+
+
+        }
         imgBack.setOnClickListener {
             onBackPressed()
         }
 
         imgProfile.setOnClickListener{
-            val intent=Intent(this,ProfileActivity::class.java)
+            val intent=Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -36,6 +49,7 @@ lateinit var mAuth:FirebaseAuth
         userRecyclerView=findViewById(R.id.userRecyclerView)
 mAuth= FirebaseAuth.getInstance()
   val users=mAuth.currentUser
+      firebaseMessaging.subscribeToTopic("/topics/${users!!.uid}")
         firebaseDatabase= FirebaseDatabase.getInstance()
         firebaseReference=firebaseDatabase.getReference("users")
         firebaseReference.addValueEventListener(object :ValueEventListener{
@@ -55,7 +69,9 @@ mAuth= FirebaseAuth.getInstance()
                 }
 
 
-                for(dataSnapShot:DataSnapshot in snapshot.children){ val user=dataSnapShot.getValue(User::class.java)
+                for(dataSnapShot:DataSnapshot in snapshot.children){
+                    val user=dataSnapShot.getValue(
+                    User::class.java)
                     if(!user!!.userId.equals( users?.uid)){
 
                        userList.add(user)
